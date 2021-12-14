@@ -1,0 +1,13 @@
+.ship__item {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 33%;
+  text-align: center;
+  border: 1px solid #00b1b0;
+  border-collapse: collapse;
+}
+
+.ship__name {
+  background-color: #ddf7f7;
+  margin-top: 0;
+}
