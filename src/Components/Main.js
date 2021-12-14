@@ -15,13 +15,12 @@ export class Main extends Component {
 
   render() {
     const { status, error, data } = this.state;
-    // console.log("-----------------> Main - render");
     return (
       <>
         {status === "initial" || status === "loading" ? (
-          <p style={{ color: "blue", textAlign: "center" }}>
+          <div style={{ color: "blue", textAlign: "center" }}>
             <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
-          </p>
+          </div>
         ) : status === "success" ? (
           <>
             <ShipsList data={data} />
