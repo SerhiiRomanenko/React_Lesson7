@@ -14,7 +14,7 @@ export class ShipsList extends Component {
     e.preventDefault();
     //   console.dir(e.currentTarget[0].value);
 
-    fetch("https://swapi.dev/api/starships/?search=" + e.currentTarget[0].value) //не могу проверить правильность, проверь плиз
+    fetch("https://swapi.dev/api/starships/?search=" + e.currentTarget[0].value) //ніби то запит ішов вірний, перевірь плиз
       .then((res) => {
         this.setState({
           status: "loading",
