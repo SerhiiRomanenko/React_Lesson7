@@ -7,7 +7,7 @@ import Moment from "react-moment";
 export class ShipsItem extends Component {
   //   constructor(props) {
   //     super(props);
-  //     // console.log(props);
+  // console.log(props);
   //   }
 
   render() {
@@ -78,7 +78,7 @@ export class ShipsItem extends Component {
           </div>
         ) : (
           <p>
-            <b> There is no pilots :(</b>
+            There is <b>no pilots :(</b>
           </p>
         )}
 

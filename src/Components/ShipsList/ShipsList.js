@@ -10,6 +10,38 @@ export class ShipsList extends Component {
   //     // console.log("-----> ShipsList - constructor");
   //   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    //   console.dir(e.currentTarget[0].value);
+
+    fetch("https://swapi.dev/api/starships/?search=" + e.currentTarget[0].value) //не могу проверить правильность, проверь плиз
+      .then((res) => {
+        this.setState({
+          status: "loading",
+          error: null,
+          data: null,
+        });
+        return res.json();
+      })
+      .then((dataJSON) => {
+        setTimeout(() => {
+          this.setState({
+            status: "success",
+            error: null,
+            data: dataJSON,
+          });
+        }, 2000);
+        // console.log(dataJSON);
+      })
+      .catch((err) => {
+        this.setState({
+          status: "error",
+          error: err.message,
+          data: null,
+        });
+      });
+  };
+
   render() {
     const { data } = this.props;
     const shipsData = data.results;
@@ -21,6 +53,13 @@ export class ShipsList extends Component {
     return (
       <div className="ships__page">
         <h1 className="ships__title">Ships of STAR WARS ⭐</h1>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            <span>Enter search text: </span>
+            <input />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
         <div className="ships__list">{renderShip}</div>
       </div>
     );
