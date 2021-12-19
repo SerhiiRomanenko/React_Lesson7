@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ShipsList } from "./ShipsList/ShipsList";
+import { ShipsSearch } from "./ShipsList/ShipsSearch";
 import Loader from "react-loader-spinner";
 
 export class Main extends Component {
@@ -10,13 +11,40 @@ export class Main extends Component {
       error: null,
       data: null,
     };
-    // console.log("-----------------> Main - constructor");
   }
+  handleSubmit = (e) => {
+    e.preventDefault();
 
+    fetch("https://swapi.dev/api/starships/?search=" + e.currentTarget[0].value)
+      .then((res) => {
+        this.setState({
+          status: "loading",
+          error: null,
+          data: null,
+        });
+        return res.json();
+      })
+      .then((dataJSON) => {
+        this.setState({
+          status: "success",
+          error: null,
+          data: dataJSON,
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          status: "error",
+          error: err.message,
+          data: null,
+        });
+      });
+    e.currentTarget[0].value = "";
+  };
   render() {
     const { status, error, data } = this.state;
     return (
-      <>
+      <div style={{ textAlign: "center" }}>
+        <ShipsSearch handleSubmit={this.handleSubmit} />
         {status === "initial" || status === "loading" ? (
           <div style={{ color: "blue", textAlign: "center" }}>
             <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
@@ -28,7 +56,7 @@ export class Main extends Component {
         ) : (
           <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
         )}
-      </>
+      </div>
     );
   }
 
@@ -50,7 +78,6 @@ export class Main extends Component {
             data: dataJSON,
           });
         }, 2000);
-        // console.log(dataJSON);
       })
       .catch((err) => {
         this.setState({
@@ -59,6 +86,5 @@ export class Main extends Component {
           data: null,
         });
       });
-    // console.log("-----------------> Main - componentDidMount");
   }
 }

@@ -5,47 +5,9 @@ import faker from "faker";
 import { ShipsItem } from "../ShipsItem/ShipsItem";
 
 export class ShipsList extends Component {
-  //   constructor(props) {
-  //     super(props);
-  //     // console.log("-----> ShipsList - constructor");
-  //   }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    //   console.dir(e.currentTarget[0].value);
-
-    fetch("https://swapi.dev/api/starships/?search=" + e.currentTarget[0].value) //ніби то запит ішов вірний, перевірь плиз
-      .then((res) => {
-        this.setState({
-          status: "loading",
-          error: null,
-          data: null,
-        });
-        return res.json();
-      })
-      .then((dataJSON) => {
-        setTimeout(() => {
-          this.setState({
-            status: "success",
-            error: null,
-            data: dataJSON,
-          });
-        }, 2000);
-        // console.log(dataJSON);
-      })
-      .catch((err) => {
-        this.setState({
-          status: "error",
-          error: err.message,
-          data: null,
-        });
-      });
-  };
-
   render() {
     const { data } = this.props;
     const shipsData = data.results;
-    // console.log(shipsData);
     const renderShip = shipsData.map((item) => {
       return <ShipsItem item={item} key={faker.datatype.uuid()} />;
     });
@@ -53,18 +15,10 @@ export class ShipsList extends Component {
     return (
       <div className="ships__page">
         <h1 className="ships__title">Ships of STAR WARS ⭐</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            <span>Enter search text: </span>
-            <input />
-          </label>
-          <button type="submit">Submit</button>
-        </form>
+
         <div className="ships__list">{renderShip}</div>
       </div>
     );
-    // console.log("-----> ShipsList - render");
-    // return <div>asasd</div>;
   }
 }
 
